@@ -1,0 +1,34 @@
+# Flutter/Dart
+.dart_tool/
+.packages
+.pub/
+build/
+
+# Flutter platform generated files
+android/.gradle/
+android/local.properties
+
+# IDE
+.idea/
+.vscode/
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Supabase temporary/local files and secrets
+supabase/.temp/
+supabase/.branches/
+supabase/.env
+supabase/**/docker.env
+
+# Environment secrets
+.env
+.env.*
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
