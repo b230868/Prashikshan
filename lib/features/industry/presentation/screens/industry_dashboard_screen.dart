@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 
+import '../../../evaluation/presentation/screens/evaluation_list_screen.dart';
 import '../../data/models/industry_internship_model.dart';
 import '../../data/services/industry_service.dart';
 import 'internship_management_screen.dart';
@@ -33,10 +33,7 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
     await _internshipsFuture;
   }
 
-  int _countByStatus(
-    List<IndustryInternshipModel> internships,
-    String status,
-  ) {
+  int _countByStatus(List<IndustryInternshipModel> internships, String status) {
     return internships.where((item) => item.status == status).length;
   }
 
@@ -69,16 +66,12 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
         future: _internshipsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
             return Center(
-              child: Text(
-                'Unable to load dashboard: ${snapshot.error}',
-              ),
+              child: Text('Unable to load dashboard: ${snapshot.error}'),
             );
           }
 
@@ -90,21 +83,20 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
             );
           }
 
-          final activeInterns =
-              _countByStatus(internships, 'active');
+          final activeInterns = _countByStatus(internships, 'active');
 
-          final pendingItr = _countItrStatus(
-            internships,
-            ['draft', 'submitted', 'under_review'],
-          );
+          final pendingItr = _countItrStatus(internships, [
+            'draft',
+            'submitted',
+            'under_review',
+          ]);
 
-          final pendingEvaluation = _countEvaluationStatus(
-            internships,
-            ['pending', 'in_progress'],
-          );
+          final pendingEvaluation = _countEvaluationStatus(internships, [
+            'pending',
+            'in_progress',
+          ]);
 
-          final completedInternships =
-              _countByStatus(internships, 'completed');
+          final completedInternships = _countByStatus(internships, 'completed');
 
           return RefreshIndicator(
             onRefresh: _refreshDashboard,
@@ -162,10 +154,7 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
 
                   const Text(
                     'Quick Actions',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
 
                   const SizedBox(height: 12),
@@ -208,6 +197,12 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
                     title: const Text('Evaluation & Verification'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EvaluationListScreen(),
+                        ),
+                      );
                       // Evaluation screen navigation will be added here.
                     },
                   ),
@@ -219,6 +214,12 @@ class _IndustryDashboardScreenState extends State<IndustryDashboardScreen> {
                     title: const Text('Reports & Analytics'),
                     trailing: const Icon(Icons.arrow_forward_ios),
                     onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EvaluationListScreen(),
+                        ),
+                      );
                       // Reports screen navigation will be added here.
                     },
                   ),
@@ -252,27 +253,17 @@ class _DashboardCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Icon(
-              icon,
-              size: 32,
-            ),
+            Icon(icon, size: 32),
             const SizedBox(height: 10),
             Text(
               value,
-              style: const TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 6),
-            Text(
-              title,
-              textAlign: TextAlign.center,
-            ),
+            Text(title, textAlign: TextAlign.center),
           ],
         ),
       ),
     );
   }
 }
-

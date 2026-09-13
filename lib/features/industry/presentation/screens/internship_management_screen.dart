@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../data/models/industry_internship_model.dart';
@@ -62,28 +61,20 @@ class _InternshipManagementScreenState
     return status.replaceAll('_', ' ').toUpperCase();
   }
 
-  Widget _statusRow(
-    String label,
-    String status,
-  ) {
+  Widget _statusRow(String label, String status) {
     return Row(
       children: [
         SizedBox(
           width: 95,
           child: Text(
             '$label:',
-            style: const TextStyle(
-              fontWeight: FontWeight.w500,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.w500),
           ),
         ),
         Chip(
           label: Text(
             _formatStatus(status),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 11,
-            ),
+            style: const TextStyle(color: Colors.white, fontSize: 11),
           ),
           backgroundColor: _getStatusColor(status),
         ),
@@ -94,30 +85,22 @@ class _InternshipManagementScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Internship Management'),
-      ),
+      appBar: AppBar(title: const Text('Internship Management')),
       body: FutureBuilder<List<IndustryInternshipModel>>(
         future: _internshipsFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
 
           if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
+            return Center(child: Text('Error: ${snapshot.error}'));
           }
 
           final internships = snapshot.data ?? [];
 
           if (internships.isEmpty) {
-            return const Center(
-              child: Text('No internships available'),
-            );
+            return const Center(child: Text('No internships available'));
           }
 
           return RefreshIndicator(
@@ -139,9 +122,7 @@ class _InternshipManagementScreenState
                         Row(
                           children: [
                             CircleAvatar(
-                              child: Text(
-                                internship.studentName[0],
-                              ),
+                              child: Text(internship.studentName[0]),
                             ),
                             const SizedBox(width: 12),
                             Expanded(
@@ -160,9 +141,7 @@ class _InternshipManagementScreenState
 
                         Text(
                           internship.internshipTitle,
-                          style: const TextStyle(
-                            fontSize: 15,
-                          ),
+                          style: const TextStyle(fontSize: 15),
                         ),
 
                         const SizedBox(height: 16),
@@ -180,20 +159,11 @@ class _InternshipManagementScreenState
 
                         const SizedBox(height: 12),
 
-                        _statusRow(
-                          'Internship',
-                          internship.status,
-                        ),
+                        _statusRow('Internship', internship.status),
 
-                        _statusRow(
-                          'ITR',
-                          internship.itrStatus,
-                        ),
+                        _statusRow('ITR', internship.itrStatus),
 
-                        _statusRow(
-                          'Evaluation',
-                          internship.evaluationStatus,
-                        ),
+                        _statusRow('Evaluation', internship.evaluationStatus),
                       ],
                     ),
                   ),
@@ -206,4 +176,3 @@ class _InternshipManagementScreenState
     );
   }
 }
-
